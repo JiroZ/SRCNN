@@ -1,0 +1,5 @@
+
+python patchify_image.py
+python bicubic.py --path input/Set14/original input/Set5/original --scale-factor 2x
+python train.py --epochs 20
+python test.py
