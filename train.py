@@ -28,7 +28,7 @@ lr = 0.001  # Learning rate.
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # Constants
 TRAIN_LABEL_PATHS = 'input/t91_hr_patches'
-TRAN_IMAGE_PATHS = 'input/t91_lr_patches'
+TRAIN_IMAGE_PATHS = 'input/t91_lr_patches'
 VALID_LABEL_PATHS = 'input/test_hr'
 VALID_IMAGE_PATHS = 'input/test_bicubic_rgb_2x'
 SAVE_VALIDATION_RESULTS = True
@@ -47,7 +47,7 @@ optimizer = optim.Adam(model.parameters(), lr=lr)
 # Loss function.
 criterion = nn.MSELoss()
 dataset_train, dataset_valid = get_datasets(
-    TRAN_IMAGE_PATHS, TRAIN_LABEL_PATHS,
+    TRAIN_IMAGE_PATHS, TRAIN_LABEL_PATHS,
     VALID_IMAGE_PATHS, VALID_LABEL_PATHS
 )
 train_loader, valid_loader = get_dataloaders(dataset_train, dataset_valid)
@@ -66,6 +66,7 @@ def train(model, dataloader):
         # Zero grad the optimizer.
         optimizer.zero_grad()
         outputs = model(image_data)
+        # Declaring Loss Function
         loss = criterion(outputs, label)
         # Backpropagation.
         loss.backward()
